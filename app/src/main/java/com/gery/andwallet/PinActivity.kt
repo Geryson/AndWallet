@@ -4,12 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.chaos.view.PinView
 import com.gery.andwallet.databinding.ActivityPinBinding
+
 
 class PinActivity : AppCompatActivity() {
     lateinit var binding: ActivityPinBinding
@@ -22,7 +26,7 @@ class PinActivity : AppCompatActivity() {
 
         binding = ActivityPinBinding.inflate(layoutInflater)
 
-        pinView = binding.pvCode
+        pinView = binding.pvPasscodeValue
 
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
@@ -39,12 +43,14 @@ class PinActivity : AppCompatActivity() {
                 if (p0.toString().length == 4) {
                     if (p0.toString() == "1234") {
                         // Grant access to MainActivity
+                        binding.tvPasscodeIncorrect.visibility = View.INVISIBLE
                         val intent = Intent(this@PinActivity, MainActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {
                         // Show an error message
                         pinView.setText("")
+                        binding.tvPasscodeIncorrect.visibility = View.VISIBLE
                     }
                 }
             }
@@ -54,5 +60,11 @@ class PinActivity : AppCompatActivity() {
         }
 
         pinView.addTextChangedListener(textWatcher)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val inputManager = pinView.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.showSoftInput(pinView, InputMethodManager.SHOW_IMPLICIT)
     }
 }

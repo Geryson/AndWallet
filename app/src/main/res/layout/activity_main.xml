@@ -7,13 +7,175 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_item_name_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/til_item_quantity_container"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_item_name_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Név" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_item_quantity_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/til_item_name_container"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_item_quantity_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mennyiség"
+            android:inputType="number" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/mbtg_item_type_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_item_add"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/til_item_name_container"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        app:checkedButton="@+id/btn_profit_picker">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_profit_picker"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/profit_background_selector"
+            android:text="Bevétel" />
+
+        <com.google.android.material.button.MaterialButton
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/btn_cost_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/cost_background_selector"
+            android:text="Kiadás" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <Button
+        android:id="@+id/btn_item_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Hozzáadás"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/mbtg_item_type_container"
+        app:layout_constraintTop_toBottomOf="@+id/til_item_name_container" />
+
+    <View
+        android:id="@+id/editor_divider_upper"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:layout_marginTop="16dp"
+        android:background="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/mbtg_item_type_container"
+        android:focusable="true"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_item_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/editor_divider_lower"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editor_divider_upper" />
+
+    <View
+        android:id="@+id/editor_divider_lower"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:layout_marginBottom="16dp"
+        android:background="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/tv_editor_balance_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_editor_balance_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="right"
+        android:text="Jelenlegi egyenleg:"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_editor_delete_all"
+        app:layout_constraintEnd_toStartOf="@+id/tv_editor_balance_value"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_editor_balance_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="left"
+        android:text="BALANCE"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_editor_delete_all"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_editor_balance_label" />
+
+    <Button
+        android:id="@+id/btn_editor_delete_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Összes törlése"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_editor_open_summary"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_editor_open_summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Áttekintés"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_editor_delete_all" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,18 +20,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_passcode_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="Írd be a jelszavad a belépéshez"
+        android:text="Írd be a PIN-kódot a belépéshez"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/pv_code"
-        app:layout_constraintEnd_toEndOf="@+id/pv_code"
-        app:layout_constraintStart_toStartOf="@+id/pv_code" />
+        app:layout_constraintBottom_toTopOf="@+id/pv_passcode_value"
+        app:layout_constraintEnd_toEndOf="@+id/pv_passcode_value"
+        app:layout_constraintStart_toStartOf="@+id/pv_passcode_value" />
 
     <com.chaos.view.PinView
-        android:id="@+id/pv_code"
+        android:id="@+id/pv_passcode_value"
+        style="@style/PinWidget.PinView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:itemCount="4"
@@ -41,5 +42,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lineColor="@color/black"
         app:lineWidth="2dp" />
+
+    <TextView
+        android:id="@+id/tv_passcode_incorrect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="A megadott PIN-kód helytelen"
+        android:textColor="#F44336"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/pv_passcode_value"
+        app:layout_constraintStart_toStartOf="@+id/pv_passcode_value"
+        app:layout_constraintTop_toBottomOf="@+id/pv_passcode_value" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
