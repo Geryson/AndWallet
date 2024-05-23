@@ -1,5 +1,6 @@
 package com.gery.andwallet
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -28,6 +29,11 @@ class MainActivity : AppCompatActivity() {
             if (isChecked) {
                 Log.d("Check", checkedId.toString())
             }
+        }
+
+        binding.btnEditorOpenSummary.setOnClickListener {
+            val intent = Intent(this@MainActivity, SummaryActivity::class.java)
+            startActivity(intent)
         }
     }
 
