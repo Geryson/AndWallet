@@ -36,5 +36,23 @@ class SummaryActivity : AppCompatActivity() {
                 }
             }
         )
+
+        val bundle = intent.extras
+        if (bundle != null) {
+            binding.tvSummaryProfitValue.text = bundle.getString("editor_profit")
+            binding.tvSummaryCostValue.text = bundle.getString("editor_cost")
+
+            val balance = bundle.getString("editor_balance")
+            binding.tvSummaryBalanceValue.text = balance
+
+            val costColor = resources.getColor(R.color.cost_indicator, null)
+            val profitColor = resources.getColor(R.color.profit_indicator, null)
+
+            if (balance!!.toInt() < 0) {
+                binding.tvSummaryBalanceLabel.setTextColor(costColor)
+            } else {
+                binding.tvSummaryBalanceLabel.setTextColor(profitColor)
+            }
+        }
     }
 }

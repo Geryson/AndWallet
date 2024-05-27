@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gery.andwallet.data.EditorItem
 import com.gery.andwallet.data.EditorItemListAdapter
 import com.gery.andwallet.databinding.ActivityMainBinding
+import kotlin.math.absoluteValue
 
 class MainActivity : AppCompatActivity(), EditorItemListAdapter.OnBalanceChangedListener{
     lateinit var binding: ActivityMainBinding
@@ -42,6 +43,26 @@ class MainActivity : AppCompatActivity(), EditorItemListAdapter.OnBalanceChanged
 
         binding.btnEditorOpenSummary.setOnClickListener {
             val intent = Intent(this@MainActivity, SummaryActivity::class.java)
+
+            val bundle = Bundle()
+            bundle.putString("editor_balance", adapter.balance.toString())
+
+            var profit = 0
+            var cost = 0
+
+            for (item in adapter.items) {
+                if (item.amount > 0) {
+                    profit += item.amount
+                } else {
+                    cost += item.amount
+                }
+
+            }
+
+            bundle.putString("editor_profit", profit.toString())
+            bundle.putString("editor_cost", cost.absoluteValue.toString())
+
+            intent.putExtras(bundle)
             startActivity(intent)
         }
 

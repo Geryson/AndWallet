@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
             android:text="Bevétel:"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/profit_indicator"
             android:textSize="20sp" />
 
         <TextView
@@ -66,6 +66,14 @@
             android:text="BEVÉTEL"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/iv_summary_profit_currency_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/payments_24dp_fill0_wght400_grad0_opsz24" />
 
     </LinearLayout>
 
@@ -86,7 +94,7 @@
             android:layout_marginRight="8dp"
             android:layout_weight="1"
             android:text="Kiadás:"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/cost_indicator"
             android:textSize="20sp" />
 
         <TextView
@@ -98,9 +106,18 @@
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
+        <ImageView
+            android:id="@+id/iv_summary_cost_currency_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/payments_24dp_fill0_wght400_grad0_opsz24" />
+
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_summary_balance_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -109,7 +126,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_summary_bracket">
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/tv_summary_balance_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="4dp"
@@ -119,7 +136,7 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/tv_summary_balance_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
@@ -127,6 +144,14 @@
             android:text="EGYENLEG"
             android:textColor="#FFFFFF"
             android:textSize="24sp" />
+
+        <ImageView
+            android:id="@+id/iv_summary_balance_currency_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/payments_24dp_fill0_wght400_grad0_opsz24" />
     </LinearLayout>
 
     <Button

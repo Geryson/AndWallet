@@ -18,7 +18,7 @@ class EditorItemListAdapter : ListAdapter<EditorItem, EditorItemListAdapter.Edit
 
     private lateinit var balanceChangedListener: OnBalanceChangedListener
 
-    private var items = mutableListOf<EditorItem>(
+    var items = mutableListOf<EditorItem>(
         EditorItem(1, "Title 1", 3000000),
         EditorItem(2, "Title 2", -2000000),
         EditorItem(3, "Title 3", 4000000))
