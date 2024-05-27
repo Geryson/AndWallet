@@ -74,6 +74,15 @@ class EditorItemListAdapter : ListAdapter<EditorItem, EditorItemListAdapter.Edit
         notifyItemRemoved(position)
     }
 
+    fun deleteAll() {
+        balance = 0
+        balanceChangedListener.onBalanceChanged(balance)
+
+        val size = items.size
+        items.clear()
+        notifyItemRangeRemoved(0, size)
+    }
+
     override fun getItemCount(): Int {
         return items.size
     }

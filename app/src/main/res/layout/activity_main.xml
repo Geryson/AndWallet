@@ -55,13 +55,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        app:checkedButton="@+id/btn_profit_picker"
         app:layout_constraintEnd_toStartOf="@+id/btn_item_add"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_item_name_container"
-        app:singleSelection="true"
         app:selectionRequired="true"
-        app:checkedButton="@+id/btn_profit_picker">
+        app:singleSelection="true">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_profit_picker"
@@ -73,8 +73,8 @@
             android:text="Bevétel" />
 
         <com.google.android.material.button.MaterialButton
-            style="?attr/materialButtonOutlinedStyle"
             android:id="@+id/btn_cost_picker"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -100,10 +100,10 @@
         android:layout_height="2dp"
         android:layout_marginTop="16dp"
         android:background="#000000"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mbtg_item_type_container"
-        android:focusable="true"/>
+        app:layout_constraintTop_toBottomOf="@+id/mbtg_item_type_container" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_item_list"
@@ -126,7 +126,7 @@
 
     <TextView
         android:id="@+id/tv_editor_balance_label"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
@@ -135,47 +135,60 @@
         android:text="Jelenlegi egyenleg:"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_editor_delete_all"
-        app:layout_constraintEnd_toStartOf="@+id/tv_editor_balance_value"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv_editor_balance_value"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
         android:gravity="left"
         android:text="BALANCE"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_editor_delete_all"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_editor_balance_label"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/tv_editor_balance_label" />
+
+    <ImageView
+        android:id="@+id/iv_editor_balance_currency_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_editor_balance_value"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tv_editor_balance_label" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tv_editor_balance_value"
+        app:layout_constraintTop_toTopOf="@+id/tv_editor_balance_value"
+        app:srcCompat="@drawable/payments_24dp_fill0_wght400_grad0_opsz24" />
 
     <Button
         android:id="@+id/btn_editor_delete_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:text="Összes törlése"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_editor_open_summary"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_editor_open_summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:text="Áttekintés"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_editor_delete_all" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

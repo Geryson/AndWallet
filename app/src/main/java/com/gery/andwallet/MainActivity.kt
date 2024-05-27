@@ -74,6 +74,10 @@ class MainActivity : AppCompatActivity(), EditorItemListAdapter.OnBalanceChanged
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         binding.tvEditorBalanceValue.text = adapter.balance.toString()
+
+        binding.btnEditorDeleteAll.setOnClickListener {
+            adapter.deleteAll()
+        }
     }
 
 
