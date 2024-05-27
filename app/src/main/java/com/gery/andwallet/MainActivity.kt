@@ -1,8 +1,10 @@
 package com.gery.andwallet
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,7 +15,7 @@ import com.gery.andwallet.data.EditorItem
 import com.gery.andwallet.data.EditorItemListAdapter
 import com.gery.andwallet.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), EditorItemListAdapter.OnBalanceChangedListener{
     lateinit var binding: ActivityMainBinding
 
     private val recyclerView: RecyclerView by lazy { binding.rvItemList }
@@ -43,20 +45,46 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.btnItemAdd.setOnClickListener {
+            val nameValue = binding.etItemNameValue.text.toString()
+            var amountValue = binding.etItemQuantityValue.text.toString().toInt()
+            if (binding.btnCostPicker.isChecked) {
+                amountValue = amountValue * -1
+            }
+
+            adapter.addItem(
+                EditorItem(
+                    1,
+                    nameValue,
+                    amountValue
+                )
+            )
+
+            binding.etItemNameValue.requestFocus()
+
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+
+            binding.etItemNameValue.text!!.clear()
+            binding.etItemQuantityValue.text!!.clear()
+        }
+
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Add some data to the adapter
-        adapter.submitList(listOf(
-            EditorItem(1, "Title 1", 3000000),
-            EditorItem(2, "Title 2", -2000000),
-            EditorItem(3, "Title 3", 4000000)
-        ))
+        binding.tvEditorBalanceValue.text = adapter.balance.toString()
     }
+
+
 
     override fun onResume() {
         super.onResume()
         binding.editorDividerUpper.requestFocus()
+    }
+
+    override fun onBalanceChanged(balance: Int) {
+        binding.tvEditorBalanceValue.text = balance.toString()
     }
 
 }

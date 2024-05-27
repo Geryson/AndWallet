@@ -1,5 +1,6 @@
 package com.gery.andwallet.data
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,10 +12,25 @@ import kotlin.math.absoluteValue
 
 class EditorItemListAdapter : ListAdapter<EditorItem, EditorItemListAdapter.EditorItemViewHolder>(DiffCallback()) {
 
+    interface OnBalanceChangedListener {
+        fun onBalanceChanged(balance: Int)
+    }
+
+    private lateinit var balanceChangedListener: OnBalanceChangedListener
+
+    private var items = mutableListOf<EditorItem>(
+        EditorItem(1, "Title 1", 3000000),
+        EditorItem(2, "Title 2", -2000000),
+        EditorItem(3, "Title 3", 4000000))
+
+    var balance = 5000000
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): EditorItemViewHolder {
+
+        balanceChangedListener = parent.context as OnBalanceChangedListener
 
         val binding = EditorItemLayoutBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -25,8 +41,11 @@ class EditorItemListAdapter : ListAdapter<EditorItem, EditorItemListAdapter.Edit
     }
 
     override fun onBindViewHolder(holder: EditorItemViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.bind(item)
+        holder.bind(items[holder.adapterPosition])
+
+        holder.binding.btnEditorItemDelete.setOnClickListener {
+            deleteItem(holder.adapterPosition)
+        }
     }
 
     class DiffCallback : DiffUtil.ItemCallback<EditorItem>() {
@@ -39,7 +58,27 @@ class EditorItemListAdapter : ListAdapter<EditorItem, EditorItemListAdapter.Edit
         }
     }
 
-    class EditorItemViewHolder(private val binding: EditorItemLayoutBinding) :
+    fun addItem(item: EditorItem) {
+        items.add(item)
+        notifyItemInserted(items.lastIndex)
+
+        balance += item.amount
+        balanceChangedListener.onBalanceChanged(balance)
+    }
+
+    fun deleteItem(position: Int) {
+        balance -= items[position].amount
+        balanceChangedListener.onBalanceChanged(balance)
+
+        items.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    override fun getItemCount(): Int {
+        return items.size
+    }
+
+    class EditorItemViewHolder(val binding: EditorItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: EditorItem) {
