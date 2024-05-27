@@ -20,6 +20,6 @@ interface EditorItemDao {
     @Query("DELETE FROM EditorItem")
     fun deleteAll()
 
-    @Query("SELECT * FROM EditorItem ORDER BY name ASC")
+    @Query("SELECT * FROM EditorItem ORDER BY id ASC")
     fun getAllItems(): MutableList<EditorItem>
 }
