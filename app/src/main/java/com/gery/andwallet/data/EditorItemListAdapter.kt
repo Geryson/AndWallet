@@ -1,16 +1,17 @@
 package com.gery.andwallet.data
 
-import android.util.Log
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.gery.andwallet.MainActivity
 import com.gery.andwallet.R
 import com.gery.andwallet.databinding.EditorItemLayoutBinding
 import kotlin.math.absoluteValue
 
-class EditorItemListAdapter : ListAdapter<EditorItem, EditorItemListAdapter.EditorItemViewHolder>(DiffCallback()) {
+class EditorItemListAdapter(context: Context) : ListAdapter<EditorItem, EditorItemListAdapter.EditorItemViewHolder>(DiffCallback()) {
 
     interface OnBalanceChangedListener {
         fun onBalanceChanged(balance: Int)
@@ -18,19 +19,26 @@ class EditorItemListAdapter : ListAdapter<EditorItem, EditorItemListAdapter.Edit
 
     private lateinit var balanceChangedListener: OnBalanceChangedListener
 
-    var items = mutableListOf<EditorItem>(
-        EditorItem(1, "Title 1", 3000000),
-        EditorItem(2, "Title 2", -2000000),
-        EditorItem(3, "Title 3", 4000000))
+    var items : MutableList<EditorItem> = mutableListOf()
 
-    var balance = 5000000
+    var balance = 0
+
+    init {
+        val thread = Thread {
+            val database: EditorItemDatabase = EditorItemDatabase.getInstance((context as MainActivity))
+            val items = database.editorItemDao().getAllItems()
+            context.runOnUiThread {
+                balanceChangedListener = context
+                initialize(items)
+            }
+        }
+        thread.start()
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): EditorItemViewHolder {
-
-        balanceChangedListener = parent.context as OnBalanceChangedListener
 
         val binding = EditorItemLayoutBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -56,6 +64,17 @@ class EditorItemListAdapter : ListAdapter<EditorItem, EditorItemListAdapter.Edit
         override fun areContentsTheSame(oldItem: EditorItem, newItem: EditorItem): Boolean {
             return oldItem == newItem
         }
+    }
+
+    fun initialize(itemList: MutableList<EditorItem>) {
+        items = itemList
+        notifyItemRangeChanged(0, items.size)
+
+        for (item in items) {
+            balance += item.amount
+        }
+
+        balanceChangedListener.onBalanceChanged(balance)
     }
 
     fun addItem(item: EditorItem) {

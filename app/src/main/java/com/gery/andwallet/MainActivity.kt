@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity(), EditorItemListAdapter.OnBalanceChanged
     lateinit var binding: ActivityMainBinding
 
     private val recyclerView: RecyclerView by lazy { binding.rvItemList }
-    private val adapter = EditorItemListAdapter()
+    private val adapter = EditorItemListAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
