@@ -11,7 +11,7 @@ import com.gery.andwallet.R
 import com.gery.andwallet.databinding.EditorItemLayoutBinding
 import kotlin.math.absoluteValue
 
-class EditorItemListAdapter(context: Context) : ListAdapter<EditorItem, EditorItemListAdapter.EditorItemViewHolder>(DiffCallback()) {
+class EditorItemListAdapter(private val context: Context) : ListAdapter<EditorItem, EditorItemListAdapter.EditorItemViewHolder>(DiffCallback()) {
 
     interface OnBalanceChangedListener {
         fun onBalanceChanged(balance: Int)
@@ -29,7 +29,13 @@ class EditorItemListAdapter(context: Context) : ListAdapter<EditorItem, EditorIt
             val items = database.editorItemDao().getAllItems()
             context.runOnUiThread {
                 balanceChangedListener = context
-                initialize(items)
+
+                this.items = items
+                notifyItemRangeChanged(0, this.items.size)
+                for (item in this.items) {
+                    balance += item.amount
+                }
+                balanceChangedListener.onBalanceChanged(balance)
             }
         }
         thread.start()
@@ -52,7 +58,14 @@ class EditorItemListAdapter(context: Context) : ListAdapter<EditorItem, EditorIt
         holder.bind(items[holder.adapterPosition])
 
         holder.binding.btnEditorItemDelete.setOnClickListener {
-            deleteItem(holder.adapterPosition)
+            val thread = Thread {
+                val database: EditorItemDatabase = EditorItemDatabase.getInstance((context as MainActivity))
+                database.editorItemDao().delete(items[holder.adapterPosition])
+                context.runOnUiThread {
+                    deleteItem(holder.adapterPosition)
+                }
+            }
+            thread.start()
         }
     }
 
@@ -64,17 +77,6 @@ class EditorItemListAdapter(context: Context) : ListAdapter<EditorItem, EditorIt
         override fun areContentsTheSame(oldItem: EditorItem, newItem: EditorItem): Boolean {
             return oldItem == newItem
         }
-    }
-
-    fun initialize(itemList: MutableList<EditorItem>) {
-        items = itemList
-        notifyItemRangeChanged(0, items.size)
-
-        for (item in items) {
-            balance += item.amount
-        }
-
-        balanceChangedListener.onBalanceChanged(balance)
     }
 
     fun addItem(item: EditorItem) {

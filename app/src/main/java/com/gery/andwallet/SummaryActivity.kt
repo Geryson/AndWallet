@@ -48,10 +48,12 @@ class SummaryActivity : AppCompatActivity() {
             val costColor = resources.getColor(R.color.cost_indicator, null)
             val profitColor = resources.getColor(R.color.profit_indicator, null)
 
-            if (balance!!.toInt() < 0) {
-                binding.tvSummaryBalanceLabel.setTextColor(costColor)
-            } else {
-                binding.tvSummaryBalanceLabel.setTextColor(profitColor)
+            if (balance!!.toInt() != 0) {
+                if (balance.toInt() < 0) {
+                    binding.tvSummaryBalanceLabel.setTextColor(costColor)
+                } else if (balance.toInt() > 0){
+                    binding.tvSummaryBalanceLabel.setTextColor(profitColor)
+                }
             }
         }
     }

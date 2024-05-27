@@ -17,6 +17,9 @@ interface EditorItemDao {
     @Delete
     fun delete(item: EditorItem)
 
+    @Query("DELETE FROM EditorItem")
+    fun deleteAll()
+
     @Query("SELECT * FROM EditorItem ORDER BY name ASC")
     fun getAllItems(): MutableList<EditorItem>
 }

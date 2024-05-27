@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gery.andwallet.data.EditorItem
+import com.gery.andwallet.data.EditorItemDatabase
 import com.gery.andwallet.data.EditorItemListAdapter
 import com.gery.andwallet.databinding.ActivityMainBinding
 import kotlin.math.absoluteValue
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity(), EditorItemListAdapter.OnBalanceChanged
     lateinit var binding: ActivityMainBinding
 
     private val recyclerView: RecyclerView by lazy { binding.rvItemList }
-    private val adapter = EditorItemListAdapter(this)
+    private lateinit var adapter : EditorItemListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,27 +70,38 @@ class MainActivity : AppCompatActivity(), EditorItemListAdapter.OnBalanceChanged
         binding.btnItemAdd.setOnClickListener {
             val nameValue = binding.etItemNameValue.text.toString()
             var amountValue = binding.etItemQuantityValue.text.toString().toInt()
+
             if (binding.btnCostPicker.isChecked) {
                 amountValue = amountValue * -1
             }
 
-            adapter.addItem(
-                EditorItem(
-                    1,
-                    nameValue,
-                    amountValue
-                )
+            val editorItem = EditorItem(
+                null,
+                nameValue,
+                amountValue
             )
+            val thread = Thread {
+                val database: EditorItemDatabase = EditorItemDatabase.getInstance(this)
+                database.editorItemDao().insert(editorItem)
+                runOnUiThread {
+                    adapter.addItem(
+                        editorItem
+                    )
 
-            binding.etItemNameValue.requestFocus()
+                    binding.etItemNameValue.requestFocus()
 
-            val inputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+                    val inputMethodManager =
+                        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
 
-            binding.etItemNameValue.text!!.clear()
-            binding.etItemQuantityValue.text!!.clear()
+                    binding.etItemNameValue.text!!.clear()
+                    binding.etItemQuantityValue.text!!.clear()
+                }
+            }
+            thread.start()
         }
+
+        adapter = EditorItemListAdapter(this)
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -97,7 +109,14 @@ class MainActivity : AppCompatActivity(), EditorItemListAdapter.OnBalanceChanged
         binding.tvEditorBalanceValue.text = adapter.balance.toString()
 
         binding.btnEditorDeleteAll.setOnClickListener {
-            adapter.deleteAll()
+            val thread = Thread {
+                val database: EditorItemDatabase = EditorItemDatabase.getInstance(this)
+                database.editorItemDao().deleteAll()
+                runOnUiThread {
+                    adapter.deleteAll()
+                }
+            }
+            thread.start()
         }
     }
 
