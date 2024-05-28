@@ -6,7 +6,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -41,7 +40,7 @@ class PinActivity : AppCompatActivity() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (p0.toString().length == 4) {
-                    if (p0.toString() == "1234") {
+                    if (p0.toString() == getString(R.string.SECURITY_PIN_CODE)) {
                         // Grant access to MainActivity
                         binding.tvPasscodeIncorrect.visibility = View.INVISIBLE
                         val intent = Intent(this@PinActivity, MainActivity::class.java)
@@ -65,6 +64,6 @@ class PinActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val inputManager = pinView.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            inputManager.showSoftInput(pinView, InputMethodManager.SHOW_IMPLICIT)
+        inputManager.showSoftInput(pinView, InputMethodManager.SHOW_IMPLICIT)
     }
 }

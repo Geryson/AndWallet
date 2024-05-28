@@ -87,7 +87,7 @@ class EditorItemListAdapter(private val context: Context) : ListAdapter<EditorIt
         balanceChangedListener.onBalanceChanged(balance)
     }
 
-    fun deleteItem(position: Int) {
+    private fun deleteItem(position: Int) {
         balance -= items[position].amount
         balanceChangedListener.onBalanceChanged(balance)
 

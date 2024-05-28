@@ -9,7 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.gery.andwallet.databinding.ActivitySummaryBinding
 
 class SummaryActivity : AppCompatActivity() {
-    lateinit var binding: ActivitySummaryBinding
+    private lateinit var binding: ActivitySummaryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

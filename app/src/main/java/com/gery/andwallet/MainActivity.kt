@@ -19,7 +19,7 @@ import com.gery.andwallet.databinding.ActivityMainBinding
 import kotlin.math.absoluteValue
 
 class MainActivity : AppCompatActivity(), EditorItemListAdapter.OnBalanceChangedListener{
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     private val recyclerView: RecyclerView by lazy { binding.rvItemList }
     private lateinit var adapter : EditorItemListAdapter
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(), EditorItemListAdapter.OnBalanceChanged
 
         binding.btnItemAdd.setOnClickListener {
             val nameValue = binding.etItemNameValue.text.toString()
-            var amountValue = binding.etItemQuantityValue.text.toString()
+            val amountValue = binding.etItemQuantityValue.text.toString()
 
             validateAndSave(nameValue, amountValue)
         }
@@ -132,12 +132,12 @@ class MainActivity : AppCompatActivity(), EditorItemListAdapter.OnBalanceChanged
             }
             thread.start()
         } else {
-            Toast.makeText(this, "HOZZÁADÁS SIKERTELEN: hiányzó / hibás adatok", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.VALIDATION_FAILED), Toast.LENGTH_SHORT).show()
         }    }
 
     private fun validateName(nameValue: String): Boolean {
         if (nameValue.isEmpty()) {
-            binding.tilItemNameContainer.error = "Név megadása kötelező"
+            binding.tilItemNameContainer.error = getString(R.string.VALIDATION_INCORRECT_NAME)
             return false
         }
         return true
@@ -147,7 +147,7 @@ class MainActivity : AppCompatActivity(), EditorItemListAdapter.OnBalanceChanged
         try {
             amountValue.toInt()
         } catch (e: NumberFormatException) {
-            binding.tilItemQuantityContainer.error = "Szám megadása kötelező"
+            binding.tilItemQuantityContainer.error = getString(R.string.VALIDATION_INCORRECT_AMOUNT)
             return false
         }
         return true

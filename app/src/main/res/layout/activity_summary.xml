@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
-        android:text="Jelenlegi egyenleg:"
+        android:text="@string/GENERAL_LABEL_BALANCE"
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/ll_summary_profit_container"
@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
-            android:text="Bevétel:"
+            android:text="@string/SUMMARY_LABEL_PROFIT"
             android:textColor="@color/profit_indicator"
             android:textSize="20sp" />
 
@@ -63,7 +63,6 @@
             android:id="@+id/tv_summary_profit_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BEVÉTEL"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
@@ -93,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
-            android:text="Kiadás:"
+            android:text="@string/SUMMARY_LABEL_COST"
             android:textColor="@color/cost_indicator"
             android:textSize="20sp" />
 
@@ -102,7 +101,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="KIADÁS"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
 
@@ -131,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="4dp"
             android:layout_weight="1"
-            android:text="Egyenleg:"
+            android:text="@string/SUMMARY_LABEL_BALANCE"
             android:textColor="#FFFFFF"
             android:textSize="24sp" />
 
@@ -141,7 +139,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
-            android:text="EGYENLEG"
             android:textColor="#FFFFFF"
             android:textSize="24sp" />
 
@@ -159,7 +156,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="Bezárás"
+        android:text="@string/SUMMARY_ACTION_CLOSE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

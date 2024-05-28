@@ -24,7 +24,7 @@
             android:id="@+id/et_item_name_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Név" />
+            android:hint="@string/EDITOR_LABEL_NAME" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -45,7 +45,7 @@
             android:id="@+id/et_item_quantity_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mennyiség"
+            android:hint="@string/EDITOR_LABEL_AMOUNT"
             android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/profit_background_selector"
-            android:text="Bevétel" />
+            android:text="@string/EDITOR_ITEM_TYPE_PROFIT" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_cost_picker"
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/cost_background_selector"
-            android:text="Kiadás" />
+            android:text="@string/EDITOR_ITEM_TYPE_COST" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <Button
@@ -90,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="Hozzáadás"
+        android:text="@string/EDITOR_ACTION_ADD_NEW"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/mbtg_item_type_container"
@@ -133,8 +133,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:gravity="right"
-        android:text="Jelenlegi egyenleg:"
+        android:gravity="end"
+        android:text="@string/GENERAL_LABEL_BALANCE"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_editor_delete_all"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -146,8 +146,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:gravity="left"
-        android:text="BALANCE"
+        android:gravity="start"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_editor_balance_label"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -171,7 +170,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Összes törlése"
+        android:text="@string/EDITOR_ACTION_DELETE_ALL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent" />
@@ -181,7 +180,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Áttekintés"
+        android:text="@string/EDITOR_ACTION_OPEN_SUMMARY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2" />

@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">AndWallet</string>
+
+    <string name="VALIDATION_FAILED">HOZZÁADÁS SIKERTELEN: hiányzó / hibás adatok</string>
+    <string name="VALIDATION_INCORRECT_NAME">Név megadása kötelező</string>
+    <string name="VALIDATION_INCORRECT_AMOUNT">Szám megadása kötelező</string>
+
+    <string name="SECURITY_PIN_CODE">1234</string>
+
+    <string name="GENERAL_LABEL_BALANCE">Jelenlegi egyenleg:</string>
+
+    <string name="EDITOR_LABEL_NAME">Név</string>
+    <string name="EDITOR_LABEL_AMOUNT">Mennyiség</string>
+    <string name="EDITOR_ITEM_TYPE_PROFIT">Bevétel</string>
+    <string name="EDITOR_ITEM_TYPE_COST">Kiadás</string>
+    <string name="EDITOR_ACTION_ADD_NEW">Hozzáadás</string>
+    <string name="EDITOR_ACTION_DELETE_ALL">Összes törlése</string>
+    <string name="EDITOR_ACTION_OPEN_SUMMARY">Áttekintés</string>
+    <string name="EDITOR_ITEM_ACTION_DELETE">Törlés</string>
+
+    <string name="PIN_LABEL_PASSCODE">Írd be a PIN-kódot a belépéshez</string>
+    <string name="PIN_LABEL_PASSCODE_INCORRECT">A megadott PIN-kód helytelen</string>
+
+    <string name="SUMMARY_LABEL_PROFIT">Bevétel:</string>
+    <string name="SUMMARY_LABEL_COST">Kiadás:</string>
+    <string name="SUMMARY_LABEL_BALANCE">Egyenleg:</string>
+    <string name="SUMMARY_ACTION_CLOSE">Bezárás</string>
 </resources>
