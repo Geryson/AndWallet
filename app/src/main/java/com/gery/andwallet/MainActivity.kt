@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -69,36 +70,9 @@ class MainActivity : AppCompatActivity(), EditorItemListAdapter.OnBalanceChanged
 
         binding.btnItemAdd.setOnClickListener {
             val nameValue = binding.etItemNameValue.text.toString()
-            var amountValue = binding.etItemQuantityValue.text.toString().toInt()
+            var amountValue = binding.etItemQuantityValue.text.toString()
 
-            if (binding.btnCostPicker.isChecked) {
-                amountValue = amountValue * -1
-            }
-
-            val editorItem = EditorItem(
-                null,
-                nameValue,
-                amountValue
-            )
-            val thread = Thread {
-                val database: EditorItemDatabase = EditorItemDatabase.getInstance(this)
-                database.editorItemDao().insert(editorItem)
-                runOnUiThread {
-                    adapter.addItem(
-                        editorItem
-                    )
-
-                    binding.etItemNameValue.requestFocus()
-
-                    val inputMethodManager =
-                        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
-
-                    binding.etItemNameValue.text!!.clear()
-                    binding.etItemQuantityValue.text!!.clear()
-                }
-            }
-            thread.start()
+            validateAndSave(nameValue, amountValue)
         }
 
         adapter = EditorItemListAdapter(this)
@@ -120,7 +94,64 @@ class MainActivity : AppCompatActivity(), EditorItemListAdapter.OnBalanceChanged
         }
     }
 
+    private fun validateAndSave(nameValue: String, amountValue: String) {
+        val isNameValid = validateName(nameValue)
+        val isAmountValid = validateAmount(amountValue)
+        if (isNameValid && isAmountValid) {
+            binding.tilItemNameContainer.error = null
+            binding.tilItemQuantityContainer.error = null
 
+            var amountNumber = amountValue.toInt()
+
+            if (binding.btnCostPicker.isChecked) {
+                amountNumber = amountValue.toInt() * -1
+            }
+
+            val editorItem = EditorItem(
+                null,
+                nameValue,
+                amountNumber
+            )
+            val thread = Thread {
+                val database: EditorItemDatabase = EditorItemDatabase.getInstance(this)
+                database.editorItemDao().insert(editorItem)
+                runOnUiThread {
+                    adapter.addItem(
+                        editorItem
+                    )
+
+                    binding.etItemNameValue.requestFocus()
+
+                    val inputMethodManager =
+                        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+
+                    binding.etItemNameValue.text!!.clear()
+                    binding.etItemQuantityValue.text!!.clear()
+                }
+            }
+            thread.start()
+        } else {
+            Toast.makeText(this, "HOZZÁADÁS SIKERTELEN: hiányzó / hibás adatok", Toast.LENGTH_SHORT).show()
+        }    }
+
+    private fun validateName(nameValue: String): Boolean {
+        if (nameValue.isEmpty()) {
+            binding.tilItemNameContainer.error = "Név megadása kötelező"
+            return false
+        }
+        return true
+    }
+
+    private fun validateAmount(amountValue: String): Boolean {
+        try {
+            amountValue.toInt()
+        } catch (e: NumberFormatException) {
+            binding.tilItemQuantityContainer.error = "Szám megadása kötelező"
+            return false
+        }
+        return true
+    }
 
     override fun onResume() {
         super.onResume()
